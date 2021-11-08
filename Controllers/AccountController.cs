@@ -64,9 +64,9 @@ namespace MainGateway.Controllers
         }
         [Route("CreateAccount")]
         [HttpPost]
-        public async Task<string> Post([FromBody] AccountDTO customerId)
+        public async Task<string> Post([FromBody] AccountDTO account)
         {
-            return _accountservice.CreateAccount(customerId);
+            return _accountservice.CreateAccount(account);
 
         }
 

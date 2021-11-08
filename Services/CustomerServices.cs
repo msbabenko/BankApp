@@ -12,17 +12,19 @@ namespace MainGateway.Services
     public class CustomerServices
     {
         private  readonly ITokenServices _tokenservice;
+        private readonly AccountService _accountService;
 
-        public CustomerServices(ITokenServices tokenServices)
+        public CustomerServices(ITokenServices tokenServices, AccountService accountService)
         {
             _tokenservice = tokenServices;
+            _accountService = accountService;
         }
         public CustomerDTO Register(CustomerDTO customerDTO)
         {
             CustomerDTO customer = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");
+                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");  //http://localhost:32389/api/
                 var PostTask = client.PostAsJsonAsync<CustomerDTO>("Customer", customerDTO);
                 PostTask.Wait();
                 var Result = PostTask.Result;
@@ -32,6 +34,18 @@ namespace MainGateway.Services
                     data.Wait();
                     customer = data.Result;
                     customer.JwtToken = _tokenservice.CreateToken(customer.Email);
+                    
+                    if (customer.CustomerID == 0) return customer;
+                    AccountDTO account = new AccountDTO()
+                    {
+                        CustomerId = customer.CustomerID,
+                       // AccountType = "SAVINGS",
+                        Balance = 0
+                    };
+
+                    _accountService.CreateAccount(account);
+                   // account.AccountType = "CURRENT";
+                   // _accountService.CreateAccount(account);
                 }
             }
             return customer;

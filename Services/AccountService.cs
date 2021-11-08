@@ -65,12 +65,10 @@ namespace MainGateway.Services
         public AccountDTO GetAccount(int accountId)
         {
             AccountDTO accountDTO = null;
-
             try
             {
                 using (var client = new HttpClient())
                 {
-
                     client.BaseAddress = new Uri("https://account-ms.azurewebsites.net/api/");
                     var postTask = client.GetAsync("Account/" + accountId);
                     postTask.Wait();
@@ -85,7 +83,6 @@ namespace MainGateway.Services
             }
             catch (Exception e)
             {
-
                 Console.WriteLine(e.Message);
             }
             return accountDTO;
@@ -95,12 +92,10 @@ namespace MainGateway.Services
         public IList<AccountDTO> GetCustomerAccounts(int customerId)
         {
             IList<AccountDTO> customeraccountDTO  = null;
-
             try
             {
                 using (var client = new HttpClient())
                 {
-
                     client.BaseAddress = new Uri("https://account-ms.azurewebsites.net/api/");
                     var postTask = client.GetAsync("Account/GetAccounts/" + customerId);
                     postTask.Wait();
@@ -121,9 +116,6 @@ namespace MainGateway.Services
             return customeraccountDTO;
         }
 
-
-      
-
         public IList<AccountStatementDTO> GetAccountStatement(StatementDTO statementDTO)
         {
             IList<AccountStatementDTO> customeraccountDTO = null;
@@ -139,13 +131,9 @@ namespace MainGateway.Services
                     var data = Result.Content.ReadFromJsonAsync<IList<AccountStatementDTO>>();
                     data.Wait();
                     customeraccountDTO = data.Result;
-                  
-
                 }
             }
             return customeraccountDTO;
         }
-
-
     }
 }
