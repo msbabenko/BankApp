@@ -25,10 +25,10 @@ namespace MainGateway.Controllers
             _service = transactionService;
         }
         // GET: api/<TransactionHistoryController>
-        [HttpGet("getTransactions/{Accountid}")]
-        public async Task<ActionResult<IList<TransactionHistoryDTO>>> Get(int Accountid)
+        [HttpGet("getTransactions/{CustomerId}")]
+        public async Task<ActionResult<IList<TransactionHistoryDTO>>> Get(int CustomerId)
         {
-            return _service.getTransactions(Accountid);
+            return _service.getTransactions(CustomerId);
         }
 
 
