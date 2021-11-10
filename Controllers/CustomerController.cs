@@ -65,15 +65,14 @@ namespace MainGateway.Controllers
             return BadRequest("Invalid User");
         }
 
-        [Route("Update")]
-        [HttpPost]
-        public ActionResult<CustomerDTO> Update([FromBody] CustomerDTO customer)
+        // [Route("Update")]
+        [HttpPut("{id}")]
+        public ActionResult<CustomerDTO> Put(int id, [FromBody] CustomerDTO customer)
         {
-            var CustomerDTO = _customerservices.Update(customer);
+            var CustomerDTO = _customerservices.Update(id, customer);
             if (CustomerDTO != null)
                 return Ok(CustomerDTO);
-            return BadRequest("Please Enter Valid CustomerID");
-
+            return BadRequest("Please Enter Valid Customer");
         }
     }
 }

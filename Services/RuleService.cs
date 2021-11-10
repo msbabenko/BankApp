@@ -12,7 +12,7 @@ namespace MainGateway.Services
     {
         public string evaluateMinBal(int accountId,float balance)
         {
-           string custDTO = " ";
+           //string custDTO = " ";
             string account = null;
             try
             {

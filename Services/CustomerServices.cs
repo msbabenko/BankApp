@@ -69,15 +69,15 @@ namespace MainGateway.Services
             }
             return customer;
         }
-        public CustomerDTO Update(CustomerDTO customerDTO)
+        public CustomerDTO Update(int id, CustomerDTO customerDTO)
         {
             CustomerDTO customer = null;
-            using (var client = new HttpClient())
+            using (var client = new HttpClient()) 
             {
-                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");
-                var PostTask = client.PostAsJsonAsync<CustomerDTO>("Customer/Update", customerDTO);
-                PostTask.Wait();
-                var Result = PostTask.Result;
+                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/"); // http://localhost:32389/ //https://customer-ms.azurewebsites.net/api/
+                var PutTask = client.PutAsJsonAsync<CustomerDTO>("Customer/" + id, customerDTO);
+                PutTask.Wait();
+                var Result = PutTask.Result;
                 if (Result.IsSuccessStatusCode)
                 {
                     var data = Result.Content.ReadFromJsonAsync<CustomerDTO>();
