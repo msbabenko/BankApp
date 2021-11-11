@@ -19,7 +19,7 @@ namespace MainGateway.Services
                 using (var client = new HttpClient())
                 {
 
-                    client.BaseAddress = new Uri("https://rules-ms.azurewebsites.net/api/");
+                    client.BaseAddress = new Uri("http://20.81.77.63/api/");
                     var postTask = client.GetAsync("Rules/accountId?accountId=" + accountId+ "&balance="+balance);
                     postTask.Wait();
                     var result = postTask.Result;
@@ -41,15 +41,15 @@ namespace MainGateway.Services
             return account;
         }
 
-        public string getServiceCharges(double balance)
+        public double getServiceCharges(double balance)
         {
-            string account = null;
+            double account = 0;
             try
             {
                 using (var client = new HttpClient())
                 {
 
-                    client.BaseAddress = new Uri("https://rules-ms.azurewebsites.net/api/");
+                    client.BaseAddress = new Uri("http://20.81.77.63/api/");
                     var postTask = client.GetAsync("Rules?balance=" +  balance);
                     postTask.Wait();
                     var result = postTask.Result;
@@ -57,7 +57,7 @@ namespace MainGateway.Services
                     {
                         var data = result.Content.ReadAsStringAsync();
                         data.Wait();
-                        account = data.Result;
+                        account = Convert.ToDouble(data.Result);
 
                         // custDTO = data.Result;
                     }

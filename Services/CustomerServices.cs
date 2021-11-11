@@ -24,7 +24,7 @@ namespace MainGateway.Services
             CustomerDTO customer = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");  //http://localhost:32389/api/
+                client.BaseAddress = new Uri("http://52.226.236.115/api/");  //http://localhost:32389/api/ https://customer-ms.azurewebsites.net/api/
                 var PostTask = client.PostAsJsonAsync<CustomerDTO>("Customer", customerDTO);
                 PostTask.Wait();
                 var Result = PostTask.Result;
@@ -55,7 +55,7 @@ namespace MainGateway.Services
             CustomerDTO customer = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");
+                client.BaseAddress = new Uri("http://52.226.236.115/api/");
                 var PostTask = client.PostAsJsonAsync<CustomerDTO>("Customer/Login", customerDTO);
                 PostTask.Wait();
                 var Result = PostTask.Result;
@@ -74,7 +74,7 @@ namespace MainGateway.Services
             CustomerDTO customer = null;
             using (var client = new HttpClient()) 
             {
-                client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/"); // http://localhost:32389/ //https://customer-ms.azurewebsites.net/api/
+                client.BaseAddress = new Uri("http://52.226.236.115/api/"); // http://localhost:32389/ //https://customer-ms.azurewebsites.net/api/
                 var PutTask = client.PutAsJsonAsync<CustomerDTO>("Customer/" + id, customerDTO);
                 PutTask.Wait();
                 var Result = PutTask.Result;
@@ -98,7 +98,7 @@ namespace MainGateway.Services
                 using (var client = new HttpClient())
                 {
 
-                    client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");
+                    client.BaseAddress = new Uri("http://52.226.236.115/api/");
                     var postTask = client.GetAsync("Customer/" + id);
                     postTask.Wait();
                     var result = postTask.Result;
@@ -125,7 +125,7 @@ namespace MainGateway.Services
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://customer-ms.azurewebsites.net/api/");
+                    client.BaseAddress = new Uri("http://52.226.236.115/api/");
                     // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     var getTask = client.GetAsync("Customer");
                     getTask.Wait();

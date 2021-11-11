@@ -38,14 +38,14 @@ namespace MainGateway.Controllers
         [HttpGet]
         public double getServiceCharges([FromQuery] double balance)
         {
-            string value = _ruleService.getServiceCharges(balance);
-            if(value==null)
+           double value = _ruleService.getServiceCharges(balance);
+            if(value==0)
             {
                 return 0;
             }
             else
             {
-                return Convert.ToDouble(value);
+                return value;
             }
           
         }
