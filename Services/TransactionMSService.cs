@@ -37,11 +37,12 @@ namespace MainGateway.Services
         //}
 
 
-        public string DepositMoney(DepositDTO depositDTO)
+        public StatusDTO DepositMoney(DepositDTO depositDTO)
         {
+            StatusDTO transactionStatusDTO = new StatusDTO();
             try { 
          
-                string status = "";
+                //string status = "";
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://transaction-ms.azurewebsites.net/api/");
@@ -50,19 +51,19 @@ namespace MainGateway.Services
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        var data = result.Content.ReadAsStringAsync();
+                        var data = result.Content.ReadFromJsonAsync<StatusDTO>();
                         data.Wait();
-                        status = data.Result;
-
+                       // status = data.Result.status;
+                        transactionStatusDTO = data.Result;
                     }
 
                 }
-                return status;
+                return transactionStatusDTO;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                return "SERRVER DOWN";
+                transactionStatusDTO.status = e.Message;
+                return transactionStatusDTO;
             }
 
 
@@ -95,32 +96,32 @@ namespace MainGateway.Services
         //    return transactionStatusDTO;
         //}
 
-        public string WithdrawMoney(DepositDTO depositDTO)
+        public StatusDTO WithdrawMoney(DepositDTO depositDTO)
         {
+            StatusDTO transactionStatusDTO = new StatusDTO();
             try
             {
-                string status = "";
+               // string status = "";
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://transaction-ms.azurewebsites.net/api/");
+                    client.BaseAddress = new Uri("https://transaction-ms.azurewebsites.net/api/"); //http://localhost:19422/ https://transaction-ms.azurewebsites.net/api/
                     var postTask = client.PostAsJsonAsync<DepositDTO>("TransactionHistory/Withdraw", depositDTO);
                     postTask.Wait();
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        var data = result.Content.ReadAsStringAsync();
+                        var data = result.Content.ReadFromJsonAsync<StatusDTO>();
                         data.Wait();
-                        status = data.Result;
-
+                       // status = data.Result;
+                        transactionStatusDTO = data.Result;
                     }
                 }
-              
-                return status;
+                return transactionStatusDTO;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                return "SERRVER DOWN";
+                transactionStatusDTO.status = e.Message;
+                return transactionStatusDTO;
             }
 
         }
